@@ -1,8 +1,7 @@
 package devlab.models;
 
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,6 +10,8 @@ import java.util.Set;
 @Builder
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "planets")
 public class Planet {
 
