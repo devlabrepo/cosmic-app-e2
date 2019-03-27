@@ -5,10 +5,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Builder
-@Data //todo - zmienic na gett sett const
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +28,17 @@ public class Tag {
   @ManyToMany(mappedBy = "tags")
   Set<Planet> planets = new HashSet<>();
 
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Tag)) return false;
+    Tag tag = (Tag) o;
+    return getTitle().equals(tag.getTitle());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getTitle());
+  }
 }

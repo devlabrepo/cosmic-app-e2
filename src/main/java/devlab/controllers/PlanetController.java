@@ -7,6 +7,7 @@ import devlab.services.PlanetService;
 import lombok.Data;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,7 +25,11 @@ public class PlanetController {
   }
 
   @GetMapping("/planets")
-  public List<PlanetDto> getPlanets() {
+  public List<PlanetDto> getPlanets(@RequestParam(value = "distance", required = false) Long distance) {
+
+    if (distance != null && distance > 0) {
+      return planetService.getPlanetsDto(distance);
+    }
     return planetService.getPlanetsDto();
   }
 

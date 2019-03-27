@@ -29,4 +29,12 @@ public class PlanetService {
             .collect(Collectors.toList());
   }
 
+  public List<PlanetDto> getPlanetsDto(Long distance) {
+    return planetRepository
+            .findPlanetsByDistanceFromSun(distance)
+            .stream()
+            .map(planetMapper::map)
+            .collect(Collectors.toList());
+  }
+
 }
