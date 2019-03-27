@@ -1,6 +1,7 @@
 package devlab.services;
 
 import devlab.mappers.PlanetMapper;
+import devlab.models.Planet;
 import devlab.models.dtos.PlanetDto;
 import devlab.repositories.PlanetRepository;
 import lombok.Data;
@@ -35,6 +36,28 @@ public class PlanetService {
             .stream()
             .map(planetMapper::map)
             .collect(Collectors.toList());
+  }
+
+  public void deletePlanetByName(String name) {
+    planetRepository.deleteByPlanetName(name);
+  }
+
+  public Planet addPlanet(PlanetDto planetDto) {
+    return planetRepository.save(planetMapper.reverse(planetDto));
+  }
+
+  public void updatePlanet(PlanetDto planetDto) {
+    planetRepository
+            .findPlanetByPlanetName(planetDto.getPlanetName())
+            .ifPresent(p -> {
+              p.setDistanceFromSun(planetDto.getDistanceFromSun());
+              p.setOneWayLightTimeToTheSun(planetDto.getOneWayLightTimeToTheSun());
+              p.setLengthOfYear(planetDto.getLengthOfYear());
+              p.setPlanetType(planetDto.getPlanetType());
+              p.setPlanetInfo(planetDto.getPlanetInfo());
+              p.setPlanetImage(planetDto.getPlanetImage());
+              planetRepository.save(p);
+            });
   }
 
 }

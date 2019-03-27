@@ -6,6 +6,8 @@ import devlab.models.Tag;
 import devlab.models.dtos.PlanetDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,7 +40,16 @@ public class PlanetMapper implements Mapper<Planet, PlanetDto> {
 
   @Override
   public Planet reverse(PlanetDto to) {
-    return null;
+    return Planet
+            .builder()
+            .planetName(to.getPlanetName())
+            .distanceFromSun(to.getDistanceFromSun())
+            .oneWayLightTimeToTheSun(to.getOneWayLightTimeToTheSun())
+            .lengthOfYear(to.getLengthOfYear())
+            .planetType(to.getPlanetType())
+            .planetInfo(to.getPlanetInfo())
+            .planetImage(to.getPlanetImage())
+            .build();
   }
 
   private enum TagsToStringsList implements Function<Tag, String> {

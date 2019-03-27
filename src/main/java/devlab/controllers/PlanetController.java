@@ -1,14 +1,12 @@
 package devlab.controllers;
 
 import devlab.commons.annotations.ApiVersion1;
+import devlab.models.Planet;
 import devlab.models.dtos.PlanetDto;
 import devlab.services.PlanetService;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,11 +24,24 @@ public class PlanetController {
 
   @GetMapping("/planets")
   public List<PlanetDto> getPlanets(@RequestParam(value = "distance", required = false) Long distance) {
-
     if (distance != null && distance > 0) {
       return planetService.getPlanetsDto(distance);
     }
     return planetService.getPlanetsDto();
   }
 
+  @PostMapping("/planets")
+  public Planet addPlanet(@RequestBody PlanetDto planetDto) {
+    return planetService.addPlanet(planetDto);
+  }
+
+  @DeleteMapping("/planets/{planetName}")
+  public void deletePlanet(@PathVariable String planetName) {
+    planetService.deletePlanetByName(planetName);
+  }
+
+  @PutMapping("/planets")
+  public void updatePlanet(@RequestBody PlanetDto planetDto) {
+    planetService.updatePlanet(planetDto);
+  }
 }
